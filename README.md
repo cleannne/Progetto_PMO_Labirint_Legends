@@ -1,4 +1,4 @@
-# Progetto_Pmo_Labirint_Legends
+# Progetto PMO Labirint Legends
 
 > Repository per il Progetto di Programmazione e Modellazione ad Oggetti.
 
