@@ -2,7 +2,7 @@
 
 > Repository per il Progetto di Programmazione e Modellazione ad Oggetti.<br>
 > Componenti:<br>
-> Giuseppe Benedetti, 322898<br>
+> Giuseppe Benedetti, matr. 322898<br>
 > Annarosa Clemente, matr. 315180<br>
 > Elia Renzoni, matr. 319978<br>
 > Eloi Ricci, matr. 324204<br>
