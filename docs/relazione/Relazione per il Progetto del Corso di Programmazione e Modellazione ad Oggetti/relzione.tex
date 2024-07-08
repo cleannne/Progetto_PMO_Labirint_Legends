@@ -23,7 +23,7 @@
 \newpage
 \section{Analisi}
     \subsection{Analisi dei Requisiti}
-        \textbf{Labirinto} è un gioco a singolo utente multi-livello in cui il giocatore deve uscire dal  labirinto in cui è intrappolato.
+        \textbf{Labyrinth Legends} è un gioco a singolo utente multi-livello in cui il giocatore deve uscire dal  labirinto in cui è intrappolato.
         La mappa in cui si muove è delimitata da mura ed è cosparsa di ostacoli (quali bombe, NPC e bucce di banana) e premi (come le casse contenenti monete e l'incantesimo di immunità). 
         \\
         Il giocatore deve raccogliere più monete possibili in un tempo ragionevole; al termine della partita questi due valori concorreranno alla creazione di una classifica nella quale saranno visibili i record ottenuti dalle varie partite. 
@@ -52,7 +52,7 @@
                     \item Linda: la più veloce, ogni movimento la fa spostare di due posizioni nella mappa.
                     \item Fonzie: ha una vita extra, muore la seconda volta che colpisce un NPC.
                 \end{itemize}
-                \item Il programma deve permette di eseguire i movimenti dell'utente. 
+                \item Il programma deve eseguire i movimenti dell'utente. 
                 \item Il programma deve permette all'utente di scegliere un nome, un personaggio e una modalità di gioco.
                 \item A fine partita deve essere visualizzata una classifica delle dieci migliori partite, ordinata in base al minor tempo impiegato per uscire dal labirinto e al maggior numero di monete ottenute.
                 \item Il programma deve creare dinamicamente e casualmente la mappa.
@@ -65,7 +65,7 @@
                 \item Gestione e salvataggio dei dati di gioco su un file.
             \end{itemize}
     \subsection{Modello del Dominio}
-        Labirinto deve organizzare il gioco in base al livello di difficoltà selezionato, questo è rappresentato dall'entità \textbf{GameDifficult}, la quale determina il numero e tipo di oggetti  -  premi e ostacoli - che popoleranno la mappa. Gli oggetti sono rappresentati dall'entità \textbf{Element}.\\
+        Labyrinth Legends deve organizzare il gioco in base al livello di difficoltà selezionato, questo è rappresentato dall'entità \textbf{GameDifficult}, la quale determina il numero e tipo di oggetti  -  ovvero premi e ostacoli - che popoleranno la mappa. Gli oggetti sono rappresentati dall'entità \textbf{Element}.\\
         I principali attori coinvolti in una partita sono:
         \begin{itemize}
             \item  L'utente, rappresentato dall’entità \textbf{IUser}, la quale permette di impostare un nome utente.
@@ -98,7 +98,7 @@
     \newpage
     \subsection{Design Dettagliato}
         In questa sezione abbiamo riportato i diagrammi UML con le relative descrizioni delle entità che rappresentano le macro componenti del nostro progetto. \\
-        Oltre all'impostazione architetturale del software secondo i pattern MVC e Observer, abbiamo utilizzato il design pattern creazionale \textbf{Singleton} laddove non era necessario avere più istanze della stessa entità. Per realizzarlo abbiamo reso privato il costruttore e abbiamo aggiunto un metodo statico e pubblico che lo chiama restituendo la nuova, o la precedente, istanza dell'entità.\\ 
+        Oltre all'impostazione architetturale del software secondo i pattern MVC e Observer, abbiamo utilizzato il design pattern creazionale \textbf{Singleton} laddove non era necessario avere più istanze della stessa entità. Per realizzarlo abbiamo reso privato il costruttore e aggiunto un metodo statico e pubblico che lo chiama restituendo la nuova, o la precedente, istanza dell'entità.\\ 
         Le entità che utilizzano il design pattern Singleton sono le seguenti:
         \begin{itemize}
             \item Controller, appartenente al controller.
@@ -132,23 +132,22 @@
             \textbf{Problema}
             \\ \\
             L'utente gioca con un personaggio a scelta tra Linda e Fonzie. Le informazioni importanti da memorizzare legate al personaggio sono la vita (fondamentale in caso di uccisione da parte di un NPC), la velocità (che serve per impostare la lunghezza dei movimenti) e il numero di monete raccolte (utile per ottenere la posizione nel ranking). \\
-            Un altro aspetto importante da gestire è dato dall'effetto dell'ostacolo banana, che fa retrocedere di cinque posizioni il giocatore, nel caso in cui venga usato il personaggio Fonzie, altrimenti lo fa retrocedere di sette posizioni.
+            Un altro aspetto importante da gestire è dato dall'effetto dell'ostacolo banana, che fa retrocedere di cinque posizioni il giocatore, nel caso in cui venga usato il personaggio Fonzie, di sette nel caso in cui si stia giocando con Linda.
             \\ \\
             \textbf{Soluzione}
             \\ \\
-            % DA AGGIUNGERE LA MODIFICA AL METODO ASTRATTO
             Per implementare queste funzionalità abbiamo creato una classe astratta chiamata \textbf{Player}, che viene estesa dalle altre due rappresentanti i personaggi, quindi \textbf{Linda} e \textbf{Fonzie}. In questo modo si riducono le ripetizioni di codice dovute alle caratteristiche in comune tra i due personaggi, evitando così di violare il principio DRY.\\
-            Per risolvere la questione legata all'effetto della banana, abbiamo deciso di memorizzare le ultime posizioni in cui il personaggio è andato. Per questo motivo, Player, oltre ai getter e i setter, espone i metodi astratti \verb|resetPosition()| e \verb|addCurrentPosition()|: il primo svuota la lista di posizioni dopo che è stata toccata la banana, mentre il secondo salva le posizioni occupate in una coda,  evitando che si ecceda la massima capacità prefissata, Da notare che l'effetto è attivato da altre entità, ma i metodi che permettono all'entità di subire l'effetto sono quelli sopra specificati (con l'aggiunta del metodo astratto \verb|getList()|) poiché riguardano il personaggio. I metodi astratti dell'entità Player sono implementati dalle entità Fonzie e Linda, in quanto devono personalizzarli rispetto al numero di passi indietro da effettuare. 
+            Per risolvere la questione legata all'effetto della banana, abbiamo deciso di memorizzare le ultime posizioni in cui il personaggio è andato. Per questo motivo, Player, oltre ai getter e i setter, espone i metodi astratti \verb|resetPosition()| e \verb|addCurrentPosition()|: il primo svuota la lista di posizioni dopo che è stata toccata la banana, mentre il secondo salva le posizioni occupate in una coda,  evitando che si ecceda la massima capacità prefissata, Da notare che l'effetto è attivato da altre entità, ma i metodi che permettono all'entità di subire l'effetto sono quelli sopra specificati (con l'aggiunta del metodo astratto \verb|getList()|) poiché riguardano il personaggio. I metodi astratti dell'entità Player sono implementati dalle entità Fonzie e Linda, in quanto devono personalizzare il numero di passi indietro da effettuare quando viene colpita la banana. 
         \subsubsection{Gestione dei Risultati e del Ranking}
-            \includegraphics[width=\textwidth]{result_ranking.png}
+            \includegraphics[width=\textwidth]{result-ranking.png}
             \textbf{Problema} 
             \\ \\
-            In caso di vittoria, al termine di ogni partita l'utente deve poter visualizzare il proprio risultato e una classifica contente i dieci migliori risultati, mentre in caso di sconfitta deve poter vedere solo il proprio. %Una cosa molto importante per i risutalti è la loro formattazione, infatti è opportuno prendere i valori del gameplay dalle diverse entità, formattarle correttamente e poi memorizzarlo su un file, di cui si stampano solo le prime dieci posizioni più meritevoli\\ \\
-            I risultati vanno salvati in un file a parte e ordinati in base al miglior tempo e numero di monetine (da qui devono essere presi i primi 10 da visualizzare in caso di vittoria)
+            In caso di vittoria, al termine di ogni partita l'utente deve poter visualizzare il proprio risultato e una classifica contente i dieci migliori risultati, mentre in caso di sconfitta deve poter vedere solo il proprio.
+            I risultati vanno salvati in un file a parte e ordinati in base al miglior tempo e numero di monetine (da qui devono essere presi i primi 10 da visualizzare in caso di vittoria).
             \\ \\
             \textbf{Soluzione} 
             \\ \\
-            Per implementare queste funzionalità vengono modellate le entità \textbf{User}, \textbf{Result}, \textbf{Ranking} e \textbf{FileMask}. User deve memorizzare il nome scelto dall'utente, Result, invece, deve contenere il risultato della partita appena terminata. Quest'ultimo è composto dal nome dell'utente - per cui risulta utile associare la classe User a Result - il numero di monete raccolte e la durata del game-play. Una volta impostati i campi compone il risultato. 
+            Per implementare queste funzionalità vengono modellate le entità \textbf{User}, \textbf{Result}, \textbf{Ranking} e \textbf{FileMask}. User deve memorizzare il nome scelto dall'utente, Result, invece, deve contenere il risultato della partita appena terminata. Quest'ultimo è composto dal nome dell'utente - per cui risulta utile aggregare la classe User a Result - il numero di monete raccolte e la durata del game-play. Una volta impostati i campi compone il risultato. 
             \\
             L'entità Ranking deve occuparsi di scrivere dentro il file contente la classifica e ordinarlo secondo il numero di monete ottenute e il tempo impiegato per terminare la partita. Queste attività di memorizzazione persistente e di ordinamento sono però affidate all'entità FileMask la quale consente la scrittura dei risultati su un file di testo e il loro ordinamento confrontandone i parametri riga per riga.
         \subsubsection{Creazione dei Premi e degli Ostacoli}
@@ -166,6 +165,7 @@
             Inoltre, l'entità \textbf{Sound} si compone di tutte e cinque le entità sopra descritte.
             \\
         \subsubsection{Generazione della Mappa}
+        \includegraphics[width=\textwidth]{gamemap.png}\\
             \textbf{Problema} 
             \\ \\
             La generazione della mappa è una componente cruciale del progetto che gestisce la creazione dinamica della mappa di gioco e l'inserimento degli elementi al suo interno, garantendo la validità e coerenza della mappa stessa. 
@@ -174,19 +174,12 @@
             \\ \\
             La classe responsabile di questo processo è \texttt{GameMap}, che segue i seguenti passaggi:
             \begin{itemize}
-                \item \textbf{Creazione dei Valori di Generazione (\texttt{createsGenerationValues})}: All'interno del costruttore della classe \texttt{GameMap}, dopo aver inizializzato le dimensioni della mappa e il riferimento al personaggio, viene chiamato il metodo \texttt{createsGenerationValues} con un parametro di difficoltà. Questo metodo calcola il numero di punti disponibili sulla mappa, rimuovendo una certa quantità per garantire che ci sia almeno un percorso percorribile e non siano presenti solo muri. Successivamente inserisce questi valori in una mappa per la successiva generazione degli elementi.
-                \item \textbf{Metodo \texttt{generateMap}}: La mappa viene generata in un ciclo \texttt{while} fino a che non viene considerata valida, provando un massimo di 30.000 generazioni. Alle iterazioni iniziali, vengono create le mura di confine. Successivamente, tutte le posizioni vuote vengono raccolte e gli elementi vengono inseriti sulla mappa basandosi sui valori precedentemente calcolati. Se durante la generazione si incontrano muri, questi vengono generati in coppia per formare una struttura coerente. Dopo aver popolato la mappa, viene inserito il punto di uscita ed eseguito un controllo di validità tramite \texttt{isMapValid}.
+                \item \textbf{Creazione dei Valori di Generazione (\texttt{createsGenerationValues})}: All'interno del costruttore della classe \texttt{GameMap}, dopo aver inizializzato le dimensioni della mappa e il riferimento al personaggio, viene chiamato il metodo \texttt{createsGenerationValues} con un parametro di difficoltà. Questo metodo calcola il numero di punti disponibili sulla mappa, rimuovendone una certa quantità per garantire che ci sia almeno un percorso percorribile e non siano presenti solo muri. Successivamente inserisce questi valori in una mappa per la generazione degli elementi.
+                \item \textbf{Metodo \texttt{generateMap}}: La mappa viene generata in un ciclo \texttt{while} fino a che non viene considerata valida, provando un massimo di 30.000 generazioni. Durante le iterazioni iniziali, vengono create le mura di confine. Successivamente, tutte le posizioni vuote vengono raccolte e gli elementi vengono inseriti sulla mappa basandosi sui valori precedentemente calcolati. Se durante la generazione si incontrano muri, questi vengono generati in coppia per formare una struttura coerente. Dopo aver popolato la mappa, viene inserito il punto di uscita ed eseguito un controllo di validità tramite \texttt{isMapValid}.
                 \item \textbf{Valida la Mappa (\texttt{isMapValid})}: Questo metodo utilizza un approccio di ricerca basato su un insieme ordinato di posizioni da visitare, iniziando dalla posizione del personaggio. Per ogni posizione esaminata, vengono calcolate tutte le possibili posizioni raggiungibili e, se uno di questi percorsi può arrivare al punto di uscita, la mappa viene considerata valida.
             \end{itemize}
             Questo processo garantisce una mappa dinamica e coerente che supporta il gioco, mantenendo un equilibrio tra difficoltà e giocabilità.
     \subsection{Design del Controller}
-        Il Controller è il componente che funge da intermediario tra il modello e la vista in un'architettura MVC. Nel nostro caso, il controller ha il compito di aggiornare le informazioni sulla partita a fronte di ogni movimento, modificare i dati del modello come il nome utente, il giocatore selezionato, il livello scelto e infine il risultato parziale che farà parte del ranking.
-        \begin{itemize}
-            \item \textbf{Problema}: Il Controller è formato da una sola classe che si occupa di mettere in comunicazione il modello con la vista. Il compito quindi è quello di memorizzare le due istanze e chiamare i rispettivi metodi a fronte di ogni evento generato dall'utente (gli eventi provengono dall'interfaccia grafica).
-            \item \textbf{Soluzione}: La classe Controller sta principalmente in ascolto degli input generati dal giocatore. Questi sono dati dalla pressione dei tasti sulla tastiera e dalla scelta dei livelli e personaggi per avviare la partita. I principali metodi che implementano questa logica sono \texttt{getGameMap()}, \texttt{runGame()} e \texttt{getData()}. Il primo si occupa di ascoltare ciò che viene dai tasti per il movimento del personaggio e inoltrare gli input al modello, il secondo controlla lo stato della partita (che può assumere i valori \texttt{GAME\_LOST}, \texttt{GAME\_IN\_PROGRESS} e \texttt{GAME\_WON}) e agisce di conseguenza, mentre l'ultimo serve a ottenere informazioni sul nome utente scelto.
-            \end{itemize}
-            Il Controller si compone delle classi \texttt{User}, \texttt{Result}, \texttt{Ranking}, \texttt{InputPlayer} e \texttt{MatrixPrinter}, mentre imposta una relazione di aggregazione con la classe \texttt{GameMap}.
-            \\
             \includegraphics[width=1\textwidth]{controller.png}
             \textbf{Problema}
             \\ \\
@@ -217,14 +210,14 @@
         ciascuna delle macro-implementazioni ovvero:
             \begin{itemize}
                 \item Per il package \textbf{Characters} è stata testata la classe Fonzie nella sua interezza.
-                \item  Per il package \textbf{Elements} sono state testate tutte le classi nella loro interezza
-                \item Per il package \textbf{Map} sono stati testati i metodi principali della parte core del modello (presenti nella classe GameMap).
+                \item  Per il package \textbf{Elements} sono state testate tutte le classi nella loro interezza, ad eccezione della classe banana che è stata testata solo nel caso di una retrocessione di cinque passi.
+                \item Per il package \textbf{GameMap} sono stati testati i metodi principali della parte core del modello (presenti nella classe GameMap).
                 \item Per il package \textbf{Movement} sono state testate tutte le classi nella loro interezza.
                 \item Per il package \textbf{Ranking} è stata testata la classe FileMask nella sua interezza.
                 \item Per il package \textbf{Sounds} è stata testata la classe Sound nella sua interezza
             \end{itemize}
         \subsubsection{Characters}
-            Per il package Characters ci siamo maggiormente concentrati sul testing di una sola classe per via delle poche differenze con la sua controparte.\\
+            Per il package Characters ci siamo maggiormente concentrati sul testing di una sola classe per via delle poche differenze con le altre.\\
             La classe è stata testata per tutti i suoi metodi ovvero:
                 \begin{itemize}
                     \item Costruttore, abbiamo testato la corretta costruzione della classe con tutti i suoi attributi iniziali, cioè la velocità, le monete e il nome.
@@ -234,12 +227,12 @@
                     \item Design Pattern Singleton, abbiamo testato il corretto funzionamento del pattern in questione.
                 \end{itemize}
         \subsubsection{Elements}
-            Per il package Elements, poiché tutti gli elementi sono essenziali per il modello, li abbiamo testati tutti.
+            Poiché tutti gli elementi del package sono fondamentali abbiamo deciso di testarli tutti, però a causa dell'implementazione del pattern Singleton, il test della banana non sempre, se eseguito con tutti gli altri test contemporaneamente, va a buon fine.
             Seguono i test effettuati per ogni elemento:
                 \begin{itemize}
                     \item Box, testato il suo effetto di aggiunta delle monete al giocatore.
                     \item ImmunitySpell, testato il suo effetto di immunità verso gli NPC.
-                    \item Banana, testato il suo effetto di far tornare indietro di 5 posizioni il personaggio.
+                    \item Banana, testato solo il suo effetto di far tornare indietro di 5 posizioni il personaggio.
                     \item Bomb, testato il suo effetto di sottrarre monete al giocatore.
                     \item Npc, testato il suo effetto di togliere una vita al personaggio.
                 \end{itemize}
@@ -248,25 +241,25 @@
                 \begin{itemize}
                     \item TestMapGeneration, si occupa di verificare il corretto funzionamento del corrispondente metodo in GameMap per generare dinamicamente la mappa.
                     \item TestRandomElementsGeneration , si occupa del verificare se gli elementi nella mappa sono stati generati correttamente non nella posizione ma nel numero.
-                    \item TestMapValidity, si occupa di verificare se a fronte dei precedenti test è una mappa valida per essere giocata ovvero non ci sono collisioni e vi è sempre un percorso per la risoluzione del gioco.
+                    \item TestMapValidity, si occupa di verificare se a fronte dei precedenti test è una mappa valida per giocare, ovvero una mappa priva di collisioni e dove vi è sempre un percorso per la risoluzione del gioco.
                 \end{itemize}
         \subsubsection{Movement}
-            Nel testing della macro area denominata Movement ci siamo concentrati sul testing di ogni classe poiché essenziali al modello di cui fanno parte:
+            Per il package Movement ci siamo concentrati sul testing di ogni classe poiché sono essenziali nel modello:
                 \begin{itemize}
-                    \item Movement, testata per tutti i suoi metodi e costruttore, nello specifico è stato testato il corretto funzionamento del movimento in tutte le sue direzioni: su, giù, destra, sinistra, se incontra un muro e i reset del numero di passi del giocatore.
-                    \item Position, testato in tutti i suoi metodi.
+                    \item Movement, testati tutti i suoi metodi e il costruttore, nello specifico è stato testato il corretto funzionamento del movimento in tutte le sue direzioni: su, giù, destra, sinistra, se incontra un muro e i reset del numero di passi del giocatore.
+                    \item Position, testati tutti i suoi metodi.
                 \end{itemize}
         \subsubsection{Ranking}
-            Nel testing della macro area denominata Ranking ci siamo concentrati sul testing di una sola classe core per denominare il corretto funzionamento della suddetta.
-            Testata in tutti i suoi metodi:
+            Per il package Ranking ci siamo concentrati sul testing della sola omonima classe, poiché core del package, per controllarne il corretto funzionamento.
+            Testati i suoi metodi:
                 \begin{itemize}
                     \item TestWriteInFile, si occupa di verificare se il file viene popolato correttamente o meno in base alle righe scritte.
-                    \item TestSortFile, si occupa di verificare se il sorting del file viene eseguito correttamente o meno controllando il file prima e dopo il sorting e verificando se tutti gli elementi nel file sono ordinati correttamenente
+                    \item TestSortFile, si occupa di verificare se il sorting del file viene eseguito correttamente o meno, controllando il file prima e dopo il sorting e verificando se tutti gli elementi nel file sono ordinati correttamenente
                 \end{itemize}
         \subsubsection{Sound}
-            Nel testing della macro area denominata Sound ci siamo concentrati nel testing di ogni suono presente nel gioco e del corretto funzionamento della classe preposta che ha i seguenti metodi:
+            Per il package Sound ci siamo concentrati nel testing di ogni suono presente nel gioco e del corretto funzionamento dell'omonima classe che ha i seguenti metodi:
                 \begin{itemize}
-                    \item PlaySound, ulteriormente testata in tutti i suoni la variante mono, invece la loop (ovvero riproducendo continuamente) una singola volta per semplicità.
+                    \item PlaySound, ulteriormente testata in tutti i suoni la variante mono, invece la loop (ovvero riproduzione continua del suono) una singola volta per semplicità.
                     \item StopSound, testata su un singolo suono per semplicità.
                     \item IsRunning, testata su un singolo suono per semplicità.
                 \end{itemize}
@@ -287,18 +280,19 @@
             \item Personaggi ed Elementi: Annarosa Clemente e Giuseppe Benedetti.
             \item User e Ranking: Elia Renzoni e Giuseppe Benedetti.
             \item Testing: Giuseppe Benedetti.
+            \item UML: Annarosa Clemente, Elia Renzoni.
             \item Relazione: Annarosa Clemente.
         \end{itemize}
     \newpage
     \subsection{Note di Sviluppo}
-        Attraverso questo progetto abbiamo appreso e consolidato concetti come \textbf{record} e \textbf{stream}. I primi, introdotti in Java 14 sono utili per la creazione di entità contenenti dati immutabili, mentre gli ultimi ci sono serviti per rendere più moderno e arricchito il codice del nostro progetto. \\
+        Attraverso questo progetto abbiamo appreso e consolidato concetti come \textbf{record} e \textbf{stream}. I primi, introdotti in Java 14, sono utili per la creazione di entità contenenti dati immutabili, mentre gli ultimi ci sono serviti per rendere più moderno e arricchito il codice del nostro progetto. \\
         Oltre a concetti puramente tecnici abbiamo capito l'importanza di standardizzare alcuni aspetti come l'indentazione, l'uso dello stesso editor e lo stile di programmazione.\\
         In particolare ogni membro del gruppo ha imparato i seguenti aspetti:
         \begin{itemize}
-            \item Elia Renzoni, ha consolidato l'uso di Git e l'utilizzo di aspetti avanzati di Java come le stream. Inoltre ha imparato a creare il design di un software partendo da idee e concetti, infine ha appreso l'importanza di una buona comunicazione tra i membri del team, per evitare che prevalgano idee senza prima essere concordate e analizzate correttamente. Le principali difficoltà incontrate sono state la gestione del movimento e la creazione della mappa con le limitazioni sul numero di ostacoli e sulle mura.
-            \item Annarosa Clemente...
-            \item Giuseppe Benedetti, ha consolidato le competenze tecniche come: l'uso di git, dell'IDE VSCodium, uso del LaTeX per le relazioni, aspetti avanzati di Java come: le stream, i record, le operazioni su file, il suono, la grafica tramite JavaFX e i test automatizzati junit.\\
+            \item Elia Renzoni ha consolidato l'uso di Git e l'utilizzo di aspetti avanzati di Java come le stream. Inoltre ha imparato a creare il design di un software partendo da idee e concetti, infine ha appreso l'importanza di una buona comunicazione tra i membri del team, per evitare che prevalgano idee senza prima essere concordate e analizzate correttamente. Le principali difficoltà incontrate sono state la gestione del movimento e la creazione della mappa con le limitazioni sul numero di ostacoli e sulle mura.
+            \item Annarosa Clemente ha consolidato l'uso di Git, dell'IDE Visual Studio Code e di aspetti avanzati come le lambda e gli stream; inoltre, ha imparato a modellare software prima di implementarlo e l'importanza di concordare le proprie idee con il team di sviluppo; le principali difficoltà incontrare riguardano la comprensione iniziale del nuovo ambiente di sviluppo e, nei primi tempi, l'installazione e il setting di Git.
+            \item Giuseppe Benedetti ha consolidato le competenze tecniche come: l'uso di Git, dell'IDE VSCodium, uso del LaTeX per le relazioni, aspetti avanzati di Java come: le stream, i record, le operazioni su file, il suono, la grafica tramite Java Swing e i test automatizzati junit.\\
             Inoltre ha imparato l'importanza di una buona comunicazione con i membri del team, che comprende, l'organizzazione del lavoro con il metodo top-down derivato dalla modellazione del design di un software, l'importanza di eseguire al meglio, in tempo, i propri compiti e non fare di testa propria, ma avere uno spirito pronto al confronto ascoltando gli altri membri del team.  
-            \item Eloi Ricci, ho consolidato l'uso di ChatGPT e git push --force.
+            \item Eloi Ricci ha consolidato l'uso di aspetti avanzati come stream, lambda ed hash map. Le difficoltà incontrate erano relative al trovare modi per gestire la risolvibilità (cioè che esista un percorso dall inizio alla fine) della mappa risolti con un BFS modificato. Anche se ha fallito in questo aspetto ha imparato a comunicare le proprie idee sul progetto 
         \end{itemize}
 \end{document}
