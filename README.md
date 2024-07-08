@@ -1,11 +1,11 @@
 # Progetto PMO Labirint Legends
 
-> Repository per il Progetto di Programmazione e Modellazione ad Oggetti.
-> Componenti:
-> Giuseppe Benedetti, 322898
-> Annarosa Clemente, matr. 315180
-> Elia Renzoni, matr. 319978
-> Eloi Ricci, matr. 324204
+> Repository per il Progetto di Programmazione e Modellazione ad Oggetti.<br>
+> Componenti:<br>
+> Giuseppe Benedetti, 322898<br>
+> Annarosa Clemente, matr. 315180<br>
+> Elia Renzoni, matr. 319978<br>
+> Eloi Ricci, matr. 324204<br>
 
 ## Analisi del Problema :
 Specifica del Problema:<br>
